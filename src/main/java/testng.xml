@@ -1,0 +1,20 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Suite1" >
+    <test name="Test Signin" preserve-order="true">
+        <packages>
+            <package name="wh.Tests"/>
+        </packages>
+
+        <classes>
+            <class name="wh.Tests.RegistrTest" />
+            <class name="wh.Tests.GetACatalogTest" />
+            <class name="wh.Tests.SearchByIdTest" />
+            <class name="wh.Tests.SearchByNameTest" />
+            <class name="wh.Tests.EnterNewInmateTest" />
+            <class name="wh.Tests.MainTest" />
+            <class name="wh.Tests.QuickEntryTest" />
+            <class name="wh.Tests.SignInTest" />
+            <class name="wh.Tests.ForgotPasswordTest" />
+        </classes>
+    </test>
+</suite>

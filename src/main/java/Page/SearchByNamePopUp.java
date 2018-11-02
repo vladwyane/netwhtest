@@ -1,16 +1,16 @@
 package Page;
 
-import Data.ProjectData;
+import Data.Inmate.SearchInmate;
 import Utils.ConfigProperties;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import Data.ProjectData.*;
+import ru.yandex.qatools.allure.annotations.Step;
+import org.openqa.selenium.Keys;
 
 import static org.testng.Assert.assertTrue;
 
@@ -44,21 +44,24 @@ public class SearchByNamePopUp extends BasePage{
         super(driver);
     }
 
-    public SearchByNamePopUp clickSearchByNameLink(){
+    @Step("Click 'Search by name' link")
+    public void clickSearchByNameLink(){
         searcByNameLink.click();
-        return new SearchByNamePopUp(driver);
     }
 
+    @Step("Click 'Search' button")
     public SearchByNamePopUp clickSearchByNameBtn(){
         searchNameBtn.click();
         return new SearchByNamePopUp(driver);
     }
 
+    @Step("Check 'Search by Inmate Name' pop-up is displayed")
     public SearchByNamePopUp checkChooseInmateIsDisplayed(){
         assertTrue(isElementPresent(chooseInmatePopUp));
         return new SearchByNamePopUp(driver);
     }
 
+    @Step("Fill 'Choose state' field")
     public SearchByNamePopUp fillInmateNameForm() {
         chooseStateField.click();
         inputField.sendKeys("Arizona");
@@ -66,28 +69,29 @@ public class SearchByNamePopUp extends BasePage{
         return new SearchByNamePopUp(driver);
     }
 
+    @Step("Check changed HTML attribute 'aria-hidden = true' for field 'Choose state'")
     public SearchByNamePopUp checkAtributeState(){
-        String str = errorMessageStateField.getAttribute("aria-hidden");
-        assertTrue(str.contains("true"));
+        checHTMLAttribute(errorMessageStateField,"aria-invalid","true");
         return new SearchByNamePopUp(driver);
     }
 
+    @Step("Check changed HTML attribute 'aria-hidden = true' for field 'First name' field")
     public SearchByNamePopUp checkAtributeFirstName(){
-        String str = firstNameField.getAttribute("aria-invalid");
-        assertTrue(str.contains("true"));
+        checHTMLAttribute(firstNameField,"aria-invalid","true");
         return new SearchByNamePopUp(driver);
     }
 
+    @Step("Check changed HTML attribute 'aria-hidden = true' for field 'Last name' field")
     public SearchByNamePopUp checkAtributeLastName(){
-        String str = lastNameField.getAttribute("aria-invalid");
-        assertTrue(str.contains("true"));
+        checHTMLAttribute(lastNameField,"aria-invalid","true");
         return new SearchByNamePopUp(driver);
     }
 
+    @Step("Fill all required fields")
     public SearchByNamePopUp searchInmateByName() {
         fillInmateNameForm();
-        type(firstNameField, ProjectData.InmateFirstName);
-        type(lastNameField, ProjectData.InmateLastName);
+        type(firstNameField, SearchInmate.SEARCH_INMATE.getFirstName());
+        type(lastNameField, SearchInmate.SEARCH_INMATE.getLastName());
         clickSearchByNameBtn();
         return PageFactory.initElements(driver, SearchByNamePopUp.class);
     }
@@ -97,12 +101,22 @@ public class SearchByNamePopUp extends BasePage{
         driver.get(ConfigProperties.getProperty("login.url"));
     }
 
+    public void driverWaitPreloader(){
+        WebDriverWait wait = new WebDriverWait(driver, 130);
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//main/div[2]/div/div/div[1]")));
+    }
+
     public void driverWait(){
         WebDriverWait wait = new WebDriverWait(driver, 130);
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//form//div[2]/a")));
     }
 
     public void driverWaitElement(){
+        WebDriverWait wait = new WebDriverWait(driver, 130);
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[7]//form/div[4]/input")));
+    }
+
+    public void draiverWaitButton(){
         WebDriverWait wait = new WebDriverWait(driver, 130);
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[7]//form/div[4]/input")));
     }

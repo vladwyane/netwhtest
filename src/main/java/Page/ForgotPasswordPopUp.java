@@ -1,6 +1,6 @@
 package Page;
 
-import Data.ProjectData;
+import Data.User.ForgotPasswordData;
 import Utils.ConfigProperties;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -9,7 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
+import ru.yandex.qatools.allure.annotations.Step;
 
 public class ForgotPasswordPopUp extends BasePage {
 
@@ -34,7 +34,6 @@ public class ForgotPasswordPopUp extends BasePage {
     @FindBy(xpath = "//div[1]//p[contains(text(),'The email field is required.')]")
     private WebElement notRequiredMessage;
 
-
     @FindBy(xpath = "//h5[contains(text(),'Email sent')]")
     private WebElement infoPopUpTitle;
 
@@ -42,55 +41,63 @@ public class ForgotPasswordPopUp extends BasePage {
         super(driver);
     }
 
+    @Step("Open 'Sign in' pop-up")
     public ForgotPasswordPopUp clickSignInLink() {
         signInLink.click();
         return new ForgotPasswordPopUp(driver);
     }
 
+    @Step("Open 'Forgot password' pop-up")
     public ForgotPasswordPopUp clickLink() {
         forgotPasswordLink.click();
         return new ForgotPasswordPopUp(driver);
     }
 
+    @Step("Check 'Forgot password' pop-up title")
     public ForgotPasswordPopUp checkTitle() {
-        String str = title.getText();
-        Assert.assertEquals(str, "Forgot Password");
+        checkText(title,"Forgot Password");
         return new ForgotPasswordPopUp(driver);
     }
 
+    @Step("Submit request")
     public ForgotPasswordPopUp clickBtn() {
         btn.click();
         return new ForgotPasswordPopUp(driver);
     }
 
+    @Step("Check error message 'Not Found'")
     public ForgotPasswordPopUp checkNotFoundMessage() {
         notFoundMessage.isDisplayed();
         return new ForgotPasswordPopUp(driver);
     }
 
+    @Step("Check error message 'Not exsist'")
     public ForgotPasswordPopUp checkNotExistMessage() {
         notRequiredMessage.isDisplayed();
         return new ForgotPasswordPopUp(driver);
     }
 
+    @Step("Fill 'email' field with valid email")
     public ForgotPasswordPopUp fillValidDataField() {
-        type(emailField, ProjectData.ForgotValidEmail);
+        type(emailField, ForgotPasswordData.VALID.getEmail());
         return PageFactory.initElements(driver, ForgotPasswordPopUp.class);
     }
 
+    @Step("Fill 'email' field with not valid email")
     public ForgotPasswordPopUp fillNotValidDataField() {
-        type(emailField, ProjectData.ForgotNotValidEmail);
+        type(emailField, ForgotPasswordData.NOT_VALID.getEmail());
         return PageFactory.initElements(driver, ForgotPasswordPopUp.class);
     }
 
+    @Step("Fill 'email' field with not exist email")
     public ForgotPasswordPopUp fillNotExistDataField() {
-        type(emailField, ProjectData.ForgotNotExistEmail);
+        type(emailField, ForgotPasswordData.NOT_EXIST.getEmail());
         return PageFactory.initElements(driver, ForgotPasswordPopUp.class);
     }
 
+    @Step("Check opened 'Succes' pop-up")
     public ForgotPasswordPopUp checkOpenedPopUp() {
-        String str = infoPopUpTitle.getText();
-        Assert.assertEquals(str, "Email sent");
+        checkText(infoPopUpTitle,"Email sent");
         return new ForgotPasswordPopUp(driver);
     }
 

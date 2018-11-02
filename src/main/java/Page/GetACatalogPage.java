@@ -1,20 +1,20 @@
 package Page;
 
-import Data.ProjectData;
+import Data.Header.GetACatalogData;
 import Utils.ConfigProperties;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
+import ru.yandex.qatools.allure.annotations.Step;
 
 import static org.testng.Assert.assertTrue;
 
 public class GetACatalogPage extends BasePage {
 
     @FindBy(xpath = "//a[@href='/catalogs']")
-    private WebElement getACatalogLink;
+    private WebElement getACataloglink;
 
     @FindBy(tagName = "h3")
     private WebElement title;
@@ -28,10 +28,10 @@ public class GetACatalogPage extends BasePage {
     @FindBy(id = "nameOnCard2")
     private WebElement inputCity;
 
-    @FindBy(xpath = "//*[@id=\"select2-PersonalMessage2-container\"]")
+    @FindBy(xpath = "//form/div[6]/div/span/span[1]/span")
     private WebElement stateField;
 
-    @FindBy(xpath = "//span[@class='select2-search select2-search--dropdown']//input[@class='select2-search__field']")
+    @FindBy(xpath = "//span[1]/input")
     private WebElement inputSearch;
 
     @FindBy(id = "Postal")
@@ -46,7 +46,7 @@ public class GetACatalogPage extends BasePage {
     @FindBy(xpath = "//span[1]/span//input")
     private WebElement catalogType;
 
-    @FindBy(xpath = "//*[@id=\"PersonalMessage\"]/option[1]")
+    @FindBy(xpath = "//span/span[1]/span/ul/li/input")
     private WebElement typeCatalogValue;
 
     @FindBy(xpath = "//form/div[10]")
@@ -83,34 +83,33 @@ public class GetACatalogPage extends BasePage {
         super(driver);
     }
 
+    @Step("Click 'Get a Catalog' link")
     public GetACatalogPage clickGetACatalogLink() {
-        getACatalogLink.click();
+        getACataloglink.click();
         return new GetACatalogPage(driver);
     }
 
+    @Step("Check 'Get A Catalog' title")
     public GetACatalogPage checkTitle() {
-        String str = title.getText();
-        Assert.assertEquals(str, "GET A CATALOG");
+        checkText(title,"GET A CATALOG");
         return new GetACatalogPage(driver);
     }
 
+    @Step("Fill field 'State'")
     public GetACatalogPage clickStateField() {
-        stateField.click();
-        inputSearch.sendKeys("Arizona");
-        inputSearch.sendKeys(Keys.ENTER);
+        fillDropDownField(stateField, inputSearch,"Arizona");
         return new GetACatalogPage(driver);
     }
 
+    @Step("Fill field 'Catalog Type'")
     public GetACatalogPage chooseCatalog() {
-        catalogType.click();
-        catalogType.sendKeys("Test Catalog");
-        catalogType.sendKeys(Keys.ENTER);
+        fillDropDownFieldWithSaveSelectedElem(catalogType,"TEST CATALOG");
         return new GetACatalogPage(driver);
     }
 
+    @Step("Check Confirmed title for pop-up ")
     public GetACatalogPage checkPopUpTitle() {
-        String str = popupTitle.getText();
-        Assert.assertEquals(str, "Request Confirmed");
+        checkText(popupTitle,"Request Confirmed");
         return new GetACatalogPage(driver);
     }
 
@@ -120,54 +119,63 @@ public class GetACatalogPage extends BasePage {
         return new GetACatalogPage(driver);
     }
 
+    @Step("Click 'Request' button")
     public GetACatalogPage clickRequestBtn() {
         requetsCatalog.click();
         return new GetACatalogPage(driver);
     }
 
+    @Step("Check validation message for 'Full name' field")
     public GetACatalogPage checkFullNameMessage() {
         assertTrue(isElementPresent(fullNameValidationMessage));
         return new GetACatalogPage(driver);
     }
 
+    @Step("Check validation message for 'Address1' field")
     public GetACatalogPage checkAddressMessage() {
         assertTrue(isElementPresent(addressValidationMessage));
         return new GetACatalogPage(driver);
     }
 
+    @Step("Check validation message for 'City' field")
     public GetACatalogPage checkCityMessage() {
         assertTrue(isElementPresent(cityValidationMessage));
         return new GetACatalogPage(driver);
     }
 
+    @Step("Check validation message for 'State' field")
     public GetACatalogPage checkStateMessage() {
         assertTrue(isElementPresent(stateValidationMessage));
         return new GetACatalogPage(driver);
     }
 
+    @Step("Check validation message for 'Postal/Zip Code' field")
     public GetACatalogPage checkZipMessage() {
         assertTrue(isElementPresent(zipValidationMessage));
         return new GetACatalogPage(driver);
     }
 
+    @Step("Check validation message for 'Email' field")
     public GetACatalogPage checkEmailMessage() {
         assertTrue(isElementPresent(emailValidationMessage));
         return new GetACatalogPage(driver);
     }
 
+    @Step("Check validation message for 'Catalog Type' field")
     public GetACatalogPage checkCatalogTypeMessage() {
         assertTrue(isElementPresent(catalogTypeValidationMessage));
         return new GetACatalogPage(driver);
     }
 
+    @Step("Fill all required fields")
     public GetACatalogPage fillCatalogForm() {
-        type(inputFullName, ProjectData.FullName);
-        type(inputAddress, ProjectData.Address);
-        type(inputCity, ProjectData.City);
+        type(inputFullName, GetACatalogData.VALIDDATA.getFullName());
+        type(inputAddress, GetACatalogData.VALIDDATA.getAddress());
+        type(inputCity, GetACatalogData.VALIDDATA.getCity());
         clickStateField();
-        type(inputPostalZipCode, ProjectData.PostalZipCode);
-        type(inputEmail, ProjectData.Email);
-        type(inputPhone, ProjectData.PhoneNumber);
+        type(inputPostalZipCode, GetACatalogData.VALIDDATA.getPostalZipCode());
+        type(inputEmail, GetACatalogData.VALIDDATA.getEmail());
+        type(inputPhone, GetACatalogData.VALIDDATA.getPhoneNumber());
         scrollDownToVisibleElement();
         chooseCatalog();
         scrollDownToVisibleElement();
@@ -178,6 +186,11 @@ public class GetACatalogPage extends BasePage {
     @Override
     public void open() {
         driver.get(ConfigProperties.getProperty("login.url"));
+    }
+
+    public void driverWaitPreloader(){
+        WebDriverWait wait = new WebDriverWait(driver, 130);
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//main/div[2]/div/div/div[1]")));
     }
 
     public void driverVisibleWait(){

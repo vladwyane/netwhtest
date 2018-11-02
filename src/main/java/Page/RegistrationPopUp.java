@@ -1,6 +1,6 @@
 package Page;
 
-import Data.ProjectData;
+import Data.User.RegistrationData;
 import Utils.ConfigProperties;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -9,7 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
+import ru.yandex.qatools.allure.annotations.Step;
 
 import static org.testng.Assert.assertTrue;
 
@@ -21,22 +21,22 @@ public class RegistrationPopUp extends BasePage {
     @FindBy(tagName = "h5")
     private WebElement title;
 
-    @FindBy(xpath = "//*[@id=\"sign-up-first_name\"]")
+    @FindBy(id = "sign-up-first_name")
     private WebElement firstNameField;
 
-    @FindBy(xpath = "//*[@id=\"sign-up-last_name\"]")
+    @FindBy(id = "sign-up-last_name")
     private WebElement lastNameField;
 
-    @FindBy(xpath = "//*[@id=\"sign-up-email\"]")
+    @FindBy(id = "sign-up-email")
     private WebElement email;
 
-    @FindBy(xpath = "//*[@id=\"sign-up-password\"]")
+    @FindBy(id = "sign-up-password")
     private WebElement password;
 
-    @FindBy(xpath = "//*[@id=\"sign-up-password_confirmation\"]")
+    @FindBy(id = "sign-up-password_confirmation")
     private WebElement confirmPassword;
 
-    @FindBy(xpath = "//form/div[5]/input")
+    @FindBy(xpath = "//div[5]/input")
     private WebElement signUpBtn;
 
     @FindBy(xpath = "//div[7]/div[3]")
@@ -44,6 +44,9 @@ public class RegistrationPopUp extends BasePage {
 
     @FindBy(xpath = "//a[@href='/account']")
     private WebElement myAccount;
+
+    @FindBy(tagName = "h5")
+    private WebElement searchByInmateIDTitle;
 
     @FindBy(xpath = "//p[contains(text(),'The email field must be a valid email.')]")
     private WebElement emailVaidMessage;
@@ -73,23 +76,30 @@ public class RegistrationPopUp extends BasePage {
         super(driver);
     }
 
-
+    @Step("Check 'Sign up' pop-up title")
     public RegistrationPopUp checkTitle() {
-        String str = title.getText();
-        Assert.assertEquals(str, "Register");
+        checkText(title,"Register");
         return new RegistrationPopUp(driver);
     }
 
+    public RegistrationPopUp clickSignupBtn(){
+        signUpBtn.click();
+        return new RegistrationPopUp(driver);
+    }
+
+    @Step("Click 'Create an Account' link")
     public RegistrationPopUp clickSignUpLink() {
         registrLink.click();
         return new RegistrationPopUp(driver);
     }
 
+    @Step("Check 'Search by Inmate ID' pop-up is displayed")
     public RegistrationPopUp registered(){
-        assertTrue(isElementPresent(myAccount));
+        assertTrue(isElementPresent(searchByInmateIDTitle));
         return new RegistrationPopUp(driver);
-    }
+}
 
+    @Step("Check validation messages for fields 'Email','Password','Confirm Password' is displayed")
     public RegistrationPopUp checkValidation(){
         assertTrue(isElementPresent(emailVaidMessage));
         assertTrue(isElementPresent(passwordValidMessage));
@@ -97,6 +107,7 @@ public class RegistrationPopUp extends BasePage {
         return new RegistrationPopUp(driver);
     }
 
+    @Step("Check empty validation messages for fields 'First Name','Last Name''Email','Password','Confirm Password' is displayed")
     public RegistrationPopUp checkEmptyValidMessage(){
         assertTrue(isElementPresent(checkEmptyFirstName));
         assertTrue(isElementPresent(checkEmptyLastName));
@@ -106,27 +117,24 @@ public class RegistrationPopUp extends BasePage {
         return new RegistrationPopUp(driver);
     }
 
+    @Step("Check registration with valid data")
     public RegistrationPopUp registrAs() {
-        type(firstNameField, ProjectData.ValidRegisterFirstName);
-        type(lastNameField, ProjectData.ValidRegisterLastName);
-        type(email, ProjectData.ValidRegisterEmail);
-        type(password, ProjectData.ValidRegisterPassword);
-        type(confirmPassword, ProjectData.ValidRegisterConfirmPassword);
-        clickSignUpBtn();
+        type(firstNameField, RegistrationData.VALID.getFirstName());
+        type(lastNameField, RegistrationData.VALID.getLastName());
+        type(email, RegistrationData.VALID.getEmail());
+        type(password, RegistrationData.VALID.getPassword());
+        type(confirmPassword, RegistrationData.VALID.getConfirmPassword());
+        signUpBtn.click();
         return PageFactory.initElements(driver, RegistrationPopUp.class);
     }
 
+    @Step("Check registration with Not valid data")
     public RegistrationPopUp registrAsWithNotValidData() {
-        type(firstNameField, ProjectData.NotValidRegisterFirstName);
-        type(lastNameField, ProjectData.NotValidRegisterLastName);
-        type(email, ProjectData.NotValidRegisterEmail);
-        type(password, ProjectData.NotValidRegisterPassword);
-        type(confirmPassword, ProjectData.NotValidRegisterConfirmPassword);
-        clickSignUpBtn();
-        return PageFactory.initElements(driver, RegistrationPopUp.class);
-    }
-
-    public RegistrationPopUp clickSignUpBtn(){
+        type(firstNameField, RegistrationData.INVALID.getEmail());
+        type(lastNameField, RegistrationData.INVALID.getLastName());
+        type(email, RegistrationData.INVALID.getEmail());
+        type(password, RegistrationData.INVALID.getPassword());
+        type(confirmPassword, RegistrationData.INVALID.getConfirmPassword());
         signUpBtn.click();
         return PageFactory.initElements(driver, RegistrationPopUp.class);
     }
@@ -136,8 +144,38 @@ public class RegistrationPopUp extends BasePage {
         driver.get(ConfigProperties.getProperty("login.url"));
     }
 
+    public void driverWaitPreloader(){
+        WebDriverWait wait = new WebDriverWait(driver, 130);
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//main/div[2]/div/div/div[1]")));
+    }
+
     public void driverWait() {
         WebDriverWait wait = new WebDriverWait(driver, 130);
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='#'][contains(text(),'Create an Account')]")));
+    }
+
+    public void driverLinkWait() {
+        WebDriverWait wait = new WebDriverWait(driver, 130);
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[5]/input")));
+    }
+
+    public void driverWaitMessage(){
+        WebDriverWait wait = new WebDriverWait(driver, 130);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//p[contains(text(),'The First Name field is required.')]")));
+    }
+
+    public void driverWaitValidMessage(){
+        WebDriverWait wait = new WebDriverWait(driver, 130);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//p[contains(text(),'The First Name field is required.')]")));
+    }
+
+    public void driverWaitBtn(){
+        WebDriverWait wait = new WebDriverWait(driver, 130);
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[5]/input")));
+    }
+
+    public void driverWaitPopUp(){
+        WebDriverWait wait = new WebDriverWait(driver, 130);
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("sign-up-first_name")));
     }
 }

@@ -1,0 +1,17 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="NegativeSuite" >
+    <test name="Negative Tests">
+        <packages>
+            <package name="wh.Tests.NegativeTest"/>
+        </packages>
+        <classes>
+            <class name="wh.Tests.NegativeTest.RegistrTest" />
+            <class name="wh.Tests.NegativeTest.GetACatalogTest" />
+            <class name="wh.Tests.NegativeTest.SearchByIdTest" />
+            <class name="wh.Tests.NegativeTest.SearchByNameTest" />
+            <class name="wh.Tests.NegativeTest.EnterNewInmateTest" />
+            <class name="wh.Tests.NegativeTest.SignInTest" />
+            <class name="wh.Tests.NegativeTest.ForgotPasswordTest" />
+        </classes>
+    </test>
+</suite>

@@ -1,21 +1,21 @@
 package Page;
 
-import Data.ProjectData;
+import Data.Inmate.NewInmate;
 import Utils.ConfigProperties;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import ru.yandex.qatools.allure.annotations.Step;
 
 import static org.testng.Assert.assertTrue;
 
 public class EnterNewInmateInformPopUp extends BasePage {
 
-    @FindBy(xpath = "//form/a[contains(text(),'or enter new inmate information')]")
+    @FindBy(xpath = " //form/a[contains(text(),'Enter Inmate Information')]")
     private WebElement enterNewInmateInformationLink;
 
     @FindBy(xpath = "//*[@id=\"inmate-info-first_name\"]")
@@ -39,7 +39,7 @@ public class EnterNewInmateInformPopUp extends BasePage {
     @FindBy(xpath = "//*[@id=\"select2-inmate-info-facility_id-container\"]")
     private WebElement facilityField;
 
-    @FindBy(xpath = "//input[@class='select2-search__field']")
+    @FindBy(xpath = "//span[1]/input")
     private WebElement inputField;
 
     @FindBy(xpath = "//div[8]/form/div[6]/input")
@@ -64,70 +64,75 @@ public class EnterNewInmateInformPopUp extends BasePage {
         super(driver);
     }
 
+    @Step("Opened 'Enter new Inmate' pop-up")
     public EnterNewInmateInformPopUp clickEnterNewInmateLink() {
         enterNewInmateInformationLink.click();
         return new EnterNewInmateInformPopUp(driver);
     }
 
+    @Step("Check validation for 'First name' field")
     public EnterNewInmateInformPopUp checkFirstNameValidationMessages() {
         assertTrue(isElementPresent(firstNameErrorMessage));
         return new EnterNewInmateInformPopUp(driver);
     }
 
+    @Step("Check validation for 'Last name' field")
     public EnterNewInmateInformPopUp checkLastNameValidationMessages() {
         assertTrue(isElementPresent(lastNameErrorMessage));
         return new EnterNewInmateInformPopUp(driver);
     }
 
+    @Step("Check validation for 'State' field")
     public EnterNewInmateInformPopUp checkStateValidationMessages() {
         assertTrue(isElementPresent(stateErrorMessage));
         return new EnterNewInmateInformPopUp(driver);
     }
 
+    @Step("Check validation for 'Facility' field")
     public EnterNewInmateInformPopUp checkFacilityValidationMessages() {
         assertTrue(isElementPresent(facilityErrorMessage));
         return new EnterNewInmateInformPopUp(driver);
     }
 
+    @Step("Save new inmate")
     public EnterNewInmateInformPopUp clickSaveBtn() {
         saveBtn.click();
         return new EnterNewInmateInformPopUp(driver);
     }
 
+    @Step("Select state")
     public EnterNewInmateInformPopUp selectState() {
-        stateField.click();
-        inputField.sendKeys("Arizona");
-        inputField.sendKeys(Keys.ENTER);
+        fillDropDownField(stateField,inputField,"Arizona");
         return new EnterNewInmateInformPopUp(driver);
     }
 
+    @Step("Select city")
     public EnterNewInmateInformPopUp selectCity() {
-        cityField.click();
-        inputField.sendKeys("Phoenix");
-        inputField.sendKeys(Keys.ENTER);
+        fillDropDownField(cityField,inputField,"Phoenix");
         return new EnterNewInmateInformPopUp(driver);
     }
 
+    @Step("Select facility")
     public EnterNewInmateInformPopUp selectFacility() {
-        facilityField.click();
-        inputField.sendKeys("Phoeix facility");
-        inputField.sendKeys(Keys.ENTER);
+        fillDropDownField(facilityField,inputField,"Phoeix facility 2");
         return new EnterNewInmateInformPopUp(driver);
     }
 
+    @Step("Verify that 'Package' pop-up")
     public EnterNewInmateInformPopUp checkPackagePopUp() {
         assertTrue(isElementPresent(selectPackagePopUp));
         return new EnterNewInmateInformPopUp(driver);
     }
 
+    @Step("Fill 'Enter new inmate' form")
     public EnterNewInmateInformPopUp fillNewInmateForm() {
         selectState();
         selectCity();
         selectFacility();
-        type(firstNameField, ProjectData.NewInmateFirstName);
-        type(lastNameField, ProjectData.NewInmateLastName);
-        type(inmateIdfield, ProjectData.NewInmateID);
-        type(houseUnitField, ProjectData.NewHousingUnit);
+        type(firstNameField, NewInmate.NEW_INMATE.getFirstName());
+        type(lastNameField, NewInmate.NEW_INMATE.getLastName());
+        type(inmateIdfield, NewInmate.NEW_INMATE.getInmateID());
+        type(houseUnitField, NewInmate.NEW_INMATE.getHousingUnit());
         clickSaveBtn();
         return PageFactory.initElements(driver, EnterNewInmateInformPopUp.class);
     }
@@ -144,6 +149,6 @@ public class EnterNewInmateInformPopUp extends BasePage {
 
     public void driverElementWait() {
         WebDriverWait wait = new WebDriverWait(driver, 130);
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//form/a[contains(text(),'or enter new inmate information')]")));
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//form/a[contains(text(),'Enter Inmate Information')]")));
     }
 }

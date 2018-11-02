@@ -1,0 +1,17 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="PositiveSuite" >
+    <test name="Positive Tests" >
+        <packages>
+            <package name="wh.Tests.PositiveTest"/>
+        </packages>
+        <classes>
+            <class name="wh.Tests.PositiveTest.RegistrTest" />
+            <class name="wh.Tests.PositiveTest.GetACatalogTest" />
+            <class name="wh.Tests.PositiveTest.SearchByIdTest" />
+            <class name="wh.Tests.PositiveTest.SearchByNameTest" />
+            <class name="wh.Tests.PositiveTest.EnterNewInmateTest" />
+            <class name="wh.Tests.PositiveTest.SignInTest" />
+            <class name="wh.Tests.PositiveTest.ForgotPasswordTest" />
+        </classes>
+    </test>
+</suite>

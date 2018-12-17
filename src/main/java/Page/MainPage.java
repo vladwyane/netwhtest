@@ -15,15 +15,11 @@ import static org.testng.Assert.assertTrue;
 
 public class MainPage extends BasePage {
 
-//    @FindBys ({@FindBy (className = "catalog-list li")})
-//    private WebElement listCatalog;
-//    List<String> currentCatalogs = new ArrayList<>();
-//    List<WebElement> listCatalogs = listCatalog.findElements(By.className("subcategory-name"));
 
     @FindBy(xpath = "//header/div/div[5]/div[1]")
     private WebElement inamteInform;
 
-    @FindBy(xpath = "//a[@href=href='/quick-entry']")
+    @FindBy(xpath = "//a[@href='/quick-entry']")
     private WebElement shopNowBtn;
 
     @FindBy(xpath = "//a[@href='#'][contains(text(),'Change')]")

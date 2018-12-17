@@ -4,7 +4,6 @@ import Page.LoginPopup;
 import Page.QuickEntryPage;
 import Utils.Wait;
 import io.qameta.allure.*;
-import org.openqa.selenium.support.PageFactory;
 import org.testng.TestListenerAdapter;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
@@ -30,7 +29,7 @@ public class SignInTest extends BaseTest {
     @Story("Positive test. Correct email and password")
     public void SignedIn() throws Exception {
         loginPopup.open();
-        loginPopup.driverWaitPreloader();
+        //loginPopup.driverWaitPreloader();
         loginPopup.driverWait();
         loginPopup.clickSignInLink();
         loginPopup.driverWaitElement();

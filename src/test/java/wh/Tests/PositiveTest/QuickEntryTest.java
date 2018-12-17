@@ -1,15 +1,12 @@
 package wh.Tests.PositiveTest;
 
-import Page.CheckoutPage;
 import Page.LoginPopup;
-import Page.MainPage;
 import Page.QuickEntryPage;
 import Utils.Wait;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
-import org.openqa.selenium.support.PageFactory;
 import org.testng.TestListenerAdapter;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
@@ -44,12 +41,14 @@ public class QuickEntryTest extends BaseTest {
         loginPopup.loginAs();
         loginPopup.checkOpenMainPage();
 
+        wait.threadsSleepWait();
+        quickEntryPage.driverWaitBtn();
         quickEntryPage.clickShopNowBtn();
         quickEntryPage.driverWait();
         quickEntryPage.checkTitle();
         quickEntryPage.fillItemNumberField();
         quickEntryPage.clickCheckButton();
-        quickEntryPage.driverWaitproducts();
+        quickEntryPage.driverWaitProducts();
         quickEntryPage.checkProduct();
         quickEntryPage.clickRemoveLink();
     }

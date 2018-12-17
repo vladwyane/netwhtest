@@ -1,0 +1,33 @@
+version: "3"
+networks:
+  wh-test-net: {}
+  wh-test-bridge:
+    driver: bridge
+services:
+  selenium-hub:
+    image: selenium/hub:3.11
+    container_name: selenium-hub
+    ports:
+      - "4444:4444"
+    networks:
+      wh-test-net: {}
+      wh-test-bridge: {}
+  chrome:
+    image: selenium/node-chrome:3.11
+    depends_on:
+      - selenium-hub
+    environment:
+      - HUB_HOST=selenium-hub
+      - HUB_PORT=4444
+    networks:
+      wh-test-net: {}
+#  test-suit:
+#   image: maven
+#   depends_on:
+#     - chrome
+#   networks:
+#     wh-test-net: {}
+#   volumes:
+#     - "./:/usr/src/wh-test"
+#   working_dir: "/usr/src/wh-test"
+#   command: mvn test

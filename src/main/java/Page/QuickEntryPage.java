@@ -66,7 +66,7 @@ public class QuickEntryPage extends BasePage {
 
     @Step("Fill 'Item number' field with right SKU")
     public QuickEntryPage fillItemNumberField() {
-        itemNumberfield.sendKeys("banana");
+        itemNumberfield.sendKeys("antES001");
         return new QuickEntryPage(driver);
     }
 
@@ -109,7 +109,7 @@ public class QuickEntryPage extends BasePage {
 
     @Override
     public void open() {
-        driver.get(ConfigProperties.getProperty("quickentry.url"));
+        driver.get(ConfigProperties.getProperty("login.url"));
     }
 
     public void driverWait() {
@@ -122,8 +122,13 @@ public class QuickEntryPage extends BasePage {
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/quick-entry']")));
     }
 
-    public void driverWaitproducts(){
+    public void driverWaitProducts(){
         WebDriverWait wait = new WebDriverWait(driver, 130);
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/cart']")));
+    }
+
+    public void driverWaitPreloader(){
+        WebDriverWait wait = new WebDriverWait(driver, 130);
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//main/div[2]/div/div/div[1]")));
     }
 }

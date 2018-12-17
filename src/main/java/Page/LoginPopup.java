@@ -52,6 +52,10 @@ public class LoginPopup extends BasePage {
     @FindBy(xpath = "//a[@href='/account']")
     private WebElement myAccount;
 
+    @FindBy(xpath = "/html/body/main/div[1]/div/div[1]/div[1]/div")
+    private WebElement slogan;
+
+
     @FindBy(xpath = "//a[@href='#'][contains(text(),'Sign Out')]")
     private WebElement SignOut;
 
@@ -135,6 +139,11 @@ public class LoginPopup extends BasePage {
         return new LoginPopup(driver);
     }
 
+    public LandingPage checkSlogan(){
+        isElementPresent(slogan);
+        return new LandingPage(driver);
+    }
+
     @Override
     public void open() {
         driver.get(ConfigProperties.getProperty("login.url"));
@@ -142,7 +151,7 @@ public class LoginPopup extends BasePage {
 
     public void driverWaitPreloader(){
         WebDriverWait wait = new WebDriverWait(driver, 130);
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//main/div[2]/div/div/div[1]")));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("circle-cutter")));
     }
 
     public void driverWait() {
@@ -152,7 +161,7 @@ public class LoginPopup extends BasePage {
 
     public void driverWaitElement() {
         WebDriverWait wait = new WebDriverWait(driver, 130);
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"sign-in-email\"]")));
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("sign-in-email")));
     }
 
     public void driverWaitPopup() {

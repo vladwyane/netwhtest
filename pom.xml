@@ -18,6 +18,35 @@
         <maven.compiler.target>1.7</maven.compiler.target>
     </properties>
 
+    <profiles>
+        <profile>
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+                <jdk>10</jdk>
+                <os>
+                    <name>Windows 10 Pro</name>
+                    <family>Windows</family>
+                    <arch>x64</arch>
+                    <version>1803</version>
+                </os>
+            </activation>
+        </profile>
+
+        <profile>
+            <id>env</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+                <jdk>10</jdk>
+                <property>
+                    <name>environment</name>
+                    <value>test</value>
+                </property>
+            </activation>
+        </profile>
+
+    </profiles>
+
     <dependencies>
         <dependency>
             <groupId>org.testng</groupId>
@@ -71,7 +100,6 @@
             <artifactId>junit5-engine</artifactId>
             <version>5.0.0-ALPHA</version>
         </dependency>
-
 
         <dependency>
             <groupId>org.hamcrest</groupId>

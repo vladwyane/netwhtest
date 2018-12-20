@@ -2,6 +2,7 @@ package Page;
 
 import Data.User.SignInUsersData;
 import Utils.ConfigProperties;
+import Utils.EnvironmentProperties;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -147,6 +148,7 @@ public class LoginPopup extends BasePage {
     @Override
     public void open() {
         driver.get(ConfigProperties.getProperty("login.url"));
+        driver.get(EnvironmentProperties.getProperty("login.url"));
     }
 
     public void driverWaitPreloader(){

@@ -21,28 +21,130 @@
     <profiles>
         <profile>
             <id>default</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>
+                                    test
+                                </phase>
+                                <goals>
+                                    <goal>
+                                        run
+                                    </goal>
+                                </goals>
+                                <configuration>
+                                    <tasks>
+                                        <delete file="${project.build.outputDirectory}/environment.properties"/>
+                                        <copy file="src/main/resources/config.properties"
+                                              tofile="${project.build.outputDirectory}/config.properties"/>
+                                    </tasks>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <skip>true</skip>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                                <configuration>
+                                    <classifier>test</classifier>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
             <activation>
+                <property>
+                    <name>dev</name>
+                    <value>true</value>
+                </property>
                 <activeByDefault>true</activeByDefault>
                 <jdk>10</jdk>
-                <os>
-                    <name>Windows 10 Pro</name>
-                    <family>Windows</family>
-                    <arch>x64</arch>
-                    <version>1803</version>
-                </os>
             </activation>
+            <distributionManagement>
+                <site>
+                    <name>WH-Dev</name>
+                    <url>https://wh.bigdropinc.net/landing</url>
+                </site>
+            </distributionManagement>
         </profile>
 
         <profile>
             <id>env</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>
+                                    test
+                                </phase>
+                                <goals>
+                                    <goal>
+                                    run
+                                    </goal>
+                                </goals>
+                                <configuration>
+                                    <tasks>
+                                        <delete file="${project.build.outputDirectory}/config.properties"/>
+                                        <copy file="src/main/resources/environment.properties"
+                                              tofile="${project.build.outputDirectory}/environment.properties"/>
+                                    </tasks>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <skip>true</skip>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                                <configuration>
+                                    <classifier>test</classifier>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
             <activation>
                 <activeByDefault>false</activeByDefault>
                 <jdk>10</jdk>
                 <property>
                     <name>environment</name>
-                    <value>test</value>
+                    <value>true</value>
                 </property>
             </activation>
+            <distributionManagement>
+                <site>
+                    <name>WH-Test-env</name>
+                    <url>http://wh_frontend_autotest:8088/landing</url>
+                </site>
+            </distributionManagement>
         </profile>
 
     </profiles>

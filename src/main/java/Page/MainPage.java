@@ -1,6 +1,7 @@
 package Page;
 
 import Utils.ConfigProperties;
+import Utils.EnvironmentProperties;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
@@ -206,6 +207,7 @@ public class MainPage extends BasePage {
     @Override
     public void open() {
         driver.get(ConfigProperties.getProperty("login.url"));
+        driver.get(EnvironmentProperties.getProperty("login.url"));
     }
 
     public void waitAllCategoriesLink() {

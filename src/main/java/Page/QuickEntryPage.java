@@ -1,6 +1,7 @@
 package Page;
 
 import Utils.ConfigProperties;
+import Utils.EnvironmentProperties;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -110,6 +111,7 @@ public class QuickEntryPage extends BasePage {
     @Override
     public void open() {
         driver.get(ConfigProperties.getProperty("login.url"));
+        driver.get(EnvironmentProperties.getProperty("login.url"));
     }
 
     public void driverWait() {

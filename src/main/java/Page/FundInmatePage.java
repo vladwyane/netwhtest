@@ -4,6 +4,7 @@ import Data.Header.FundInmateUnregistered;
 import Data.Order.OrderData;
 import Data.Order.PaymentData;
 import Utils.ConfigProperties;
+import Utils.EnvironmentProperties;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -509,6 +510,7 @@ public class FundInmatePage extends BasePage {
     @Override
     public void open() {
         driver.get(ConfigProperties.getProperty("login.url"));
+        driver.get(EnvironmentProperties.getProperty("login.url"));
     }
 
     public void draiverWaitLink(){

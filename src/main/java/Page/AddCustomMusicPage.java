@@ -1,6 +1,7 @@
 package Page;
 
 import Utils.ConfigProperties;
+import Utils.EnvironmentProperties;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -77,5 +78,6 @@ public class AddCustomMusicPage extends BasePage {
     @Override
     public void open() {
         driver.get(ConfigProperties.getProperty("login.url"));
+        driver.get(EnvironmentProperties.getProperty("login.url"));
     }
 }

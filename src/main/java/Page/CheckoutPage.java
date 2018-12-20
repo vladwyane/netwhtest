@@ -3,6 +3,7 @@ package Page;
 import Data.Order.OrderData;
 import Data.Order.PaymentData;
 import Utils.ConfigProperties;
+import Utils.EnvironmentProperties;
 import Utils.Wait;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
@@ -283,6 +284,7 @@ public class CheckoutPage extends BasePage {
     @Override
     public void open() {
         driver.get(ConfigProperties.getProperty("login.url"));
+        driver.get(EnvironmentProperties.getProperty("login.url"));
     }
 
     public CheckoutPage moveToAddNewAddress() {

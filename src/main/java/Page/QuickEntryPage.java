@@ -54,14 +54,14 @@ public class QuickEntryPage extends BasePage {
     }
 
     @Step("Click 'Shop now' button")
-    public QuickEntryPage clickShopNowBtn(){
+    public QuickEntryPage clickShopNowBtn() {
         shopNowBtn.click();
         return PageFactory.initElements(driver, QuickEntryPage.class);
     }
 
     @Step("Check 'Quick Entry' page title")
     public QuickEntryPage checkTitle() {
-        checkText(title,"QUICK ENTRY");
+        checkText(title, "QUICK ENTRY");
         return new QuickEntryPage(driver);
     }
 
@@ -90,7 +90,7 @@ public class QuickEntryPage extends BasePage {
     }
 
     @Step("Click 'Remove' link")
-    public QuickEntryPage clickRemoveLink(){
+    public QuickEntryPage clickRemoveLink() {
         removeLink.click();
         return new QuickEntryPage(driver);
     }
@@ -102,7 +102,7 @@ public class QuickEntryPage extends BasePage {
     }
 
     @Step("Open Checkout page")
-    public QuickEntryPage openCheckoutPage(){
+    public QuickEntryPage openCheckoutPage() {
         checkoutBtn.click();
         checkText(checkoutTitle, "CHECKOUT");
         return new QuickEntryPage(driver);
@@ -124,12 +124,12 @@ public class QuickEntryPage extends BasePage {
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/quick-entry']")));
     }
 
-    public void driverWaitProducts(){
+    public void driverWaitProducts() {
         WebDriverWait wait = new WebDriverWait(driver, 130);
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/cart']")));
     }
 
-    public void driverWaitPreloader(){
+    public void driverWaitPreloader() {
         WebDriverWait wait = new WebDriverWait(driver, 130);
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//main/div[2]/div/div/div[1]")));
     }

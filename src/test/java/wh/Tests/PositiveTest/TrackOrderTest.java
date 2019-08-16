@@ -16,7 +16,7 @@ import wh.Tests.TestBase.BaseTest;
 @Feature("Change Package Test")
 public class TrackOrderTest extends BaseTest {
 
-    TrackOrderPage trackOrderPage;
+    private TrackOrderPage trackOrderPage;
 
     @BeforeMethod
     public void initPageObjects() {

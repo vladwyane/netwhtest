@@ -39,5 +39,4 @@ public enum RegistrationData {
         this.password = password;
         this.confirmPassword = confirmPassword;
     }
-
 }

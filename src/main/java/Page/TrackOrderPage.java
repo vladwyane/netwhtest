@@ -45,77 +45,77 @@ public class TrackOrderPage extends BasePage {
     @FindBy(xpath = "//p[contains(text(),'The inmate_number field is required.')]")
     private WebElement inmateIDErrorMessage;
 
-    public TrackOrderPage(WebDriver driver){
+    public TrackOrderPage(WebDriver driver) {
         super(driver);
     }
 
-    public TrackOrderPage checkDisplayOrderNumberErrorMessage(){
+    public TrackOrderPage checkDisplayOrderNumberErrorMessage() {
         assertTrue(isElementPresent(orderNumberErrorMessage));
         return new TrackOrderPage(driver);
     }
 
-    public TrackOrderPage checkDisplayInmateIDErrorMessage(){
+    public TrackOrderPage checkDisplayInmateIDErrorMessage() {
         assertTrue(isElementPresent(inmateIDErrorMessage));
         return new TrackOrderPage(driver);
     }
 
-    public TrackOrderPage openTrackOrderPage(){
+    public TrackOrderPage openTrackOrderPage() {
         trackOrderLink.click();
-        checkText(title,"TRACK ORDER");
+        checkText(title, "TRACK ORDER");
         return new TrackOrderPage(driver);
     }
 
-    public TrackOrderPage clickSearchBtn(){
+    public TrackOrderPage clickSearchBtn() {
         searchBtn.click();
         return new TrackOrderPage(driver);
     }
 
-    public TrackOrderPage fillFieldsUPS(){
-        type(inputOrderNumber,TrackOrderUPSData.VALID_ORDER_DATA.getOrderNumber());
-        type(inputInmateID,TrackOrderUPSData.VALID_ORDER_DATA.getInmateID());
+    public TrackOrderPage fillFieldsUPS() {
+        type(inputOrderNumber, TrackOrderUPSData.VALID_ORDER_DATA.getOrderNumber());
+        type(inputInmateID, TrackOrderUPSData.VALID_ORDER_DATA.getInmateID());
         return new TrackOrderPage(driver);
     }
 
-    public TrackOrderPage fillFieldsGSO(){
-        type(inputOrderNumber,TrackOrderGSOData.VALID_ORDER_DATA.getOrderNumber());
-        type(inputInmateID,TrackOrderGSOData.VALID_ORDER_DATA.getInmateID());
+    public TrackOrderPage fillFieldsGSO() {
+        type(inputOrderNumber, TrackOrderGSOData.VALID_ORDER_DATA.getOrderNumber());
+        type(inputInmateID, TrackOrderGSOData.VALID_ORDER_DATA.getInmateID());
         return new TrackOrderPage(driver);
     }
 
-    public TrackOrderPage clickTrackorderPopUpLink(){
+    public TrackOrderPage clickTrackorderPopUpLink() {
         trackOrderPopUp.click();
         return new TrackOrderPage(driver);
     }
 
-    public TrackOrderPage checkUPSPopUp(){
-        checkText(popUpTitle,"TRACKING INFORMATION UPS");
-        checkText(trackingNumber,"Tracking Number: 1Z1264000354325966");
+    public TrackOrderPage checkUPSPopUp() {
+        checkText(popUpTitle, "TRACKING INFORMATION UPS");
+        checkText(trackingNumber, "Tracking Number: 1Z1264000354325966");
         return new TrackOrderPage(driver);
     }
 
-    public TrackOrderPage checkGSOPopUp(){
-        checkText(popUpTitle,"TRACKING INFORMATION GSO");
-        checkText(trackingNumber,"Tracking Number: 66022082018369762865");
+    public TrackOrderPage checkGSOPopUp() {
+        checkText(popUpTitle, "TRACKING INFORMATION GSO");
+        checkText(trackingNumber, "Tracking Number: 66022082018369762865");
         return new TrackOrderPage(driver);
     }
 
     @Override
     public void open() {
         driver.get(ConfigProperties.getProperty("login.url"));
-        driver.get(EnvironmentProperties.getProperty("login.url"));
+        //  driver.get(EnvironmentProperties.getProperty("login.url"));
     }
 
-    public void draiverWaitLink(){
+    public void draiverWaitLink() {
         WebDriverWait wait = new WebDriverWait(driver, 130);
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/track-order']")));
     }
 
-    public void driverWaitPreloader(){
+    public void driverWaitPreloader() {
         WebDriverWait wait = new WebDriverWait(driver, 130);
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//main/div[2]/div/div/div[1]")));
     }
 
-    public void driverWaitTrackPopUp(){
+    public void driverWaitTrackPopUp() {
         WebDriverWait wait = new WebDriverWait(driver, 130);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[8]/div/h4")));
     }

@@ -41,20 +41,29 @@ public class ApplicationManager {
     }
 
     public WebDriver unit() throws Exception {
+        if (driver == null) {
+            String path = System.getProperty("user.dir");
+            System.setProperty("webdriver.chrome.driver", path + "/src/main/resources/chromedriver.exe");
 
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setBrowserName("chrome");
-        capabilities.setVersion("70.0");
-        capabilities.setCapability("enableVNC", true);
-        capabilities.setCapability("enableVideo", false);
-        driver = new RemoteWebDriver(
-                URI.create("http://10.0.1.200:4444/wd/hub/").toURL(),
-                capabilities);
-        driver.manage().deleteAllCookies();
-        driver.manage().window().setSize(new Dimension(1920,1080));
-        driver.manage().timeouts().implicitlyWait(Long.parseLong(ConfigProperties.getProperty("imp.wait")), TimeUnit.SECONDS);
-        driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
+            driver = new ChromeDriver();
+            driver.manage().window().maximize();
+            driver.manage().timeouts().implicitlyWait(Long.parseLong(ConfigProperties.getProperty("imp.wait")), TimeUnit.SECONDS);
+        }
         return driver;
+
+//        DesiredCapabilities capabilities = new DesiredCapabilities();
+//        capabilities.setBrowserName("chrome");
+//        capabilities.setVersion("70.0");
+//        capabilities.setCapability("enableVNC", true);
+//        capabilities.setCapability("enableVideo", false);
+//        driver = new RemoteWebDriver(
+//                URI.create("http://10.0.1.200:4444/wd/hub/").toURL(),
+//                capabilities);
+//        driver.manage().deleteAllCookies();
+       // driver.manage().window().setSize(new Dimension(1920,1080));
+        //driver.manage().timeouts().implicitlyWait(Long.parseLong(ConfigProperties.getProperty("imp.wait")), TimeUnit.SECONDS);
+        //driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
+       // return driver;
     }
 
     public void stop() {

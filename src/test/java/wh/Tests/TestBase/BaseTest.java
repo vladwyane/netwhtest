@@ -10,7 +10,6 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.ITestContext;
 import org.testng.Reporter;
 import org.testng.annotations.*;
-
 import java.net.URI;
 import java.util.concurrent.TimeUnit;
 
@@ -29,6 +28,4 @@ public class BaseTest {
     public void teardown() {
         app.stop();
     }
-
-
 }

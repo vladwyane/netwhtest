@@ -16,9 +16,14 @@ import static org.testng.Assert.assertTrue;
 
 public class MainPage extends BasePage {
 
-
     @FindBy(xpath = "//header/div/div[5]/div[1]")
     private WebElement inamteInform;
+
+    @FindBy(xpath = "//input[@type='search']")
+    private WebElement searchField;
+
+    @FindBy(xpath = "//form/button")
+    private WebElement searchBtn;
 
     @FindBy(xpath = "//a[@href='/quick-entry']")
     private WebElement shopNowBtn;
@@ -197,6 +202,13 @@ public class MainPage extends BasePage {
         return new MainPage(driver);
     }
 
+    public MainPage findRequiredProduct(){
+        searchField.click();
+        type(searchField,"Sony KD49XF8096BR2 Black");
+        searchBtn.click();
+        return new MainPage(driver);
+    }
+
 //    public MainPage getElemCatalogLists() {
 //        for (WebElement catalog : listCatalogs) {
 //            currentCatalogs.add(catalog.getText());
@@ -207,7 +219,7 @@ public class MainPage extends BasePage {
     @Override
     public void open() {
         driver.get(ConfigProperties.getProperty("login.url"));
-        driver.get(EnvironmentProperties.getProperty("login.url"));
+        //driver.get(EnvironmentProperties.getProperty("login.url"));
     }
 
     public void waitAllCategoriesLink() {

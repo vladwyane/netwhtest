@@ -187,7 +187,7 @@ public class GetACatalogPage extends BasePage {
     @Override
     public void open() {
         driver.get(ConfigProperties.getProperty("login.url"));
-        driver.get(EnvironmentProperties.getProperty("login.url"));
+        //driver.get(EnvironmentProperties.getProperty("login.url"));
     }
 
     public void driverWaitPreloader(){

@@ -79,11 +79,11 @@ public class RegistrationPopUp extends BasePage {
 
     @Step("Check 'Sign up' pop-up title")
     public RegistrationPopUp checkTitle() {
-        checkText(title,"Register");
+        checkText(title, "Register");
         return new RegistrationPopUp(driver);
     }
 
-    public RegistrationPopUp clickSignupBtn(){
+    public RegistrationPopUp clickSignupBtn() {
         signUpBtn.click();
         return new RegistrationPopUp(driver);
     }
@@ -95,13 +95,13 @@ public class RegistrationPopUp extends BasePage {
     }
 
     @Step("Check 'Search by Inmate ID' pop-up is displayed")
-    public RegistrationPopUp registered(){
+    public RegistrationPopUp registered() {
         assertTrue(isElementPresent(searchByInmateIDTitle));
         return new RegistrationPopUp(driver);
-}
+    }
 
     @Step("Check validation messages for fields 'Email','Password','Confirm Password' is displayed")
-    public RegistrationPopUp checkValidation(){
+    public RegistrationPopUp checkValidation() {
         assertTrue(isElementPresent(emailVaidMessage));
         assertTrue(isElementPresent(passwordValidMessage));
         assertTrue(isElementPresent(confirmPasswordValidMessage));
@@ -109,7 +109,7 @@ public class RegistrationPopUp extends BasePage {
     }
 
     @Step("Check empty validation messages for fields 'First Name','Last Name''Email','Password','Confirm Password' is displayed")
-    public RegistrationPopUp checkEmptyValidMessage(){
+    public RegistrationPopUp checkEmptyValidMessage() {
         assertTrue(isElementPresent(checkEmptyFirstName));
         assertTrue(isElementPresent(checkEmptyLastName));
         assertTrue(isElementPresent(checkEmptyEmail));
@@ -143,10 +143,10 @@ public class RegistrationPopUp extends BasePage {
     @Override
     public void open() {
         driver.get(ConfigProperties.getProperty("login.url"));
-        driver.get(EnvironmentProperties.getProperty("login.url"));
+        //driver.get(EnvironmentProperties.getProperty("login.url"));
     }
 
-    public void driverWaitPreloader(){
+    public void driverWaitPreloader() {
         WebDriverWait wait = new WebDriverWait(driver, 130);
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//main/div[2]/div/div/div[1]")));
     }
@@ -161,22 +161,22 @@ public class RegistrationPopUp extends BasePage {
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[5]/input")));
     }
 
-    public void driverWaitMessage(){
+    public void driverWaitMessage() {
         WebDriverWait wait = new WebDriverWait(driver, 130);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//p[contains(text(),'The First Name field is required.')]")));
     }
 
-    public void driverWaitValidMessage(){
+    public void driverWaitValidMessage() {
         WebDriverWait wait = new WebDriverWait(driver, 130);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//p[contains(text(),'The First Name field is required.')]")));
     }
 
-    public void driverWaitBtn(){
+    public void driverWaitBtn() {
         WebDriverWait wait = new WebDriverWait(driver, 130);
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[5]/input")));
     }
 
-    public void driverWaitPopUp(){
+    public void driverWaitPopUp() {
         WebDriverWait wait = new WebDriverWait(driver, 130);
         wait.until(ExpectedConditions.elementToBeClickable(By.id("sign-up-first_name")));
     }

@@ -42,23 +42,23 @@ public class PackagePopUp extends BasePage {
         return PageFactory.initElements(driver, PackagePopUp.class);
     }
 
-    public PackagePopUp checkDivInfo(){
-        checkText(packageInfo,"Package type: Special purchase change");
+    public PackagePopUp checkDivInfo() {
+        checkText(packageInfo, "Package type: Special purchase change");
         return new PackagePopUp(driver);
     }
 
     @Override
     public void open() {
         driver.get(ConfigProperties.getProperty("login.url"));
-        driver.get(EnvironmentProperties.getProperty("login.url"));
+       // driver.get(EnvironmentProperties.getProperty("login.url"));
     }
 
-    public void driverWaitPopUp(){
+    public void driverWaitPopUp() {
         WebDriverWait wait = new WebDriverWait(driver, 130);
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[7]/div[3]/input")));
     }
 
-    public void driverWaitDivInfo(){
+    public void driverWaitDivInfo() {
         WebDriverWait wait = new WebDriverWait(driver, 130);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[1]/aside/div/div[1]/div[1]")));
     }

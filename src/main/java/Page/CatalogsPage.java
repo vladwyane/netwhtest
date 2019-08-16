@@ -17,7 +17,6 @@ public class CatalogsPage extends BasePage {
     @FindBy(className = "catalog-list")
     private WebElement catalogList;
 
-
     public CatalogsPage(WebDriver driver) {
         super(driver);
     }
@@ -64,8 +63,8 @@ public class CatalogsPage extends BasePage {
     }
 
     @Override
-    public void open() {
-        driver.get(ConfigProperties.getProperty("login.url"));
-        driver.get(EnvironmentProperties.getProperty("login.url"));
+        public void open() {
+            driver.get(ConfigProperties.getProperty("login.url"));
+            driver.get(EnvironmentProperties.getProperty("login.url"));
     }
 }

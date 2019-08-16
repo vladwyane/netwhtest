@@ -32,7 +32,7 @@ public class LoginPopup extends BasePage {
     @FindBy(xpath = "//p[@class='error-message'][contains(text(),'The password field is required.')]")
     private WebElement passwordValidationMessage;
 
-    @FindBy(xpath = "//div[2]/form/div[3]/input[@class='btn']")
+    @FindBy(xpath = "//button[contains(text(),'Sign In')]")
     private WebElement btn;
 
     @FindBy(xpath = "//a[@href='/account']")
@@ -56,6 +56,17 @@ public class LoginPopup extends BasePage {
     @FindBy(xpath = "/html/body/main/div[1]/div/div[1]/div[1]/div")
     private WebElement slogan;
 
+    @FindBy(xpath = "//div/p[1]/strong")
+    private WebElement inmateID;
+
+    @FindBy(xpath = "//h5[contains(text(),'Would you like to continue with the previously entered inmate information or change to a different inmate?')]")
+    private WebElement changeInmatePopupTitle;
+
+    @FindBy(xpath = "//ul/li/p[1]/span[contains(text(),'ALLOWCODEINMATE4')]")
+    private WebElement inmateIDPopup;
+
+    @FindBy(xpath = "//a[contains(text(),'Continue')]")
+    private WebElement continueBtn;
 
     @FindBy(xpath = "//a[@href='#'][contains(text(),'Sign Out')]")
     private WebElement SignOut;
@@ -140,6 +151,24 @@ public class LoginPopup extends BasePage {
         return new LoginPopup(driver);
     }
 
+    @Step("Check inmate")
+    public LoginPopup checkInmate(){
+        checkText(inmateID,"ALLOWCODEINMATE4");
+        return new LoginPopup(driver);
+    }
+
+    @Step("Check inmate in pop-up")
+    public LoginPopup checkInmatePopup(){
+        checkText(inmateIDPopup,"ALLOWCODEINMATE4");
+        return new LoginPopup(driver);
+    }
+
+    @Step("Close change inmate pop-up")
+    public LoginPopup closeInmatePopUp(){
+        continueBtn.click();
+        return new LoginPopup(driver);
+    }
+
     public LandingPage checkSlogan(){
         isElementPresent(slogan);
         return new LandingPage(driver);
@@ -148,7 +177,7 @@ public class LoginPopup extends BasePage {
     @Override
     public void open() {
         driver.get(ConfigProperties.getProperty("login.url"));
-        driver.get(EnvironmentProperties.getProperty("login.url"));
+        //driver.get(EnvironmentProperties.getProperty("login.url"));
     }
 
     public void driverWaitPreloader(){

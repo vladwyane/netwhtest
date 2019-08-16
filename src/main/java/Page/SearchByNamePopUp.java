@@ -15,7 +15,7 @@ import org.openqa.selenium.Keys;
 
 import static org.testng.Assert.assertTrue;
 
-public class SearchByNamePopUp extends BasePage{
+public class SearchByNamePopUp extends BasePage {
 
     @FindBy(xpath = "//form//div[2]/a")
     private WebElement searcByNameLink;
@@ -41,23 +41,24 @@ public class SearchByNamePopUp extends BasePage{
     @FindBy(xpath = "//div[7]/div[5]")
     private WebElement chooseInmatePopUp;
 
-    public SearchByNamePopUp(WebDriver driver){
+    public SearchByNamePopUp(WebDriver driver) {
+
         super(driver);
     }
 
     @Step("Click 'Search by name' link")
-    public void clickSearchByNameLink(){
+    public void clickSearchByNameLink() {
         searcByNameLink.click();
     }
 
     @Step("Click 'Search' button")
-    public SearchByNamePopUp clickSearchByNameBtn(){
+    public SearchByNamePopUp clickSearchByNameBtn() {
         searchNameBtn.click();
         return new SearchByNamePopUp(driver);
     }
 
     @Step("Check 'Search by Inmate Name' pop-up is displayed")
-    public SearchByNamePopUp checkChooseInmateIsDisplayed(){
+    public SearchByNamePopUp checkChooseInmateIsDisplayed() {
         assertTrue(isElementPresent(chooseInmatePopUp));
         return new SearchByNamePopUp(driver);
     }
@@ -71,20 +72,20 @@ public class SearchByNamePopUp extends BasePage{
     }
 
     @Step("Check changed HTML attribute 'aria-hidden = true' for field 'Choose state'")
-    public SearchByNamePopUp checkAtributeState(){
-        checHTMLAttribute(errorMessageStateField,"aria-invalid","true");
+    public SearchByNamePopUp checkAtributeState() {
+        checHTMLAttribute(errorMessageStateField, "aria-invalid", "true");
         return new SearchByNamePopUp(driver);
     }
 
     @Step("Check changed HTML attribute 'aria-hidden = true' for field 'First name' field")
-    public SearchByNamePopUp checkAtributeFirstName(){
-        checHTMLAttribute(firstNameField,"aria-invalid","true");
+    public SearchByNamePopUp checkAtributeFirstName() {
+        checHTMLAttribute(firstNameField, "aria-invalid", "true");
         return new SearchByNamePopUp(driver);
     }
 
     @Step("Check changed HTML attribute 'aria-hidden = true' for field 'Last name' field")
-    public SearchByNamePopUp checkAtributeLastName(){
-        checHTMLAttribute(lastNameField,"aria-invalid","true");
+    public SearchByNamePopUp checkAtributeLastName() {
+        checHTMLAttribute(lastNameField, "aria-invalid", "true");
         return new SearchByNamePopUp(driver);
     }
 
@@ -99,27 +100,26 @@ public class SearchByNamePopUp extends BasePage{
 
     @Override
     public void open() {
-
         driver.get(ConfigProperties.getProperty("login.url"));
-        driver.get(EnvironmentProperties.getProperty("login.url"));
+        // driver.get(EnvironmentProperties.getProperty("login.url"));
     }
 
-    public void driverWaitPreloader(){
+    public void driverWaitPreloader() {
         WebDriverWait wait = new WebDriverWait(driver, 130);
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//main/div[2]/div/div/div[1]")));
     }
 
-    public void driverWait(){
+    public void driverWait() {
         WebDriverWait wait = new WebDriverWait(driver, 130);
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//form//div[2]/a")));
     }
 
-    public void driverWaitElement(){
+    public void driverWaitElement() {
         WebDriverWait wait = new WebDriverWait(driver, 130);
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[7]//form/div[4]/input")));
     }
 
-    public void draiverWaitButton(){
+    public void draiverWaitButton() {
         WebDriverWait wait = new WebDriverWait(driver, 130);
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[7]//form/div[4]/input")));
     }

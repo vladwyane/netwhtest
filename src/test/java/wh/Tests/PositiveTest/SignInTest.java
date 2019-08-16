@@ -34,6 +34,10 @@ public class SignInTest extends BaseTest {
         loginPopup.clickSignInLink();
         loginPopup.driverWaitElement();
         loginPopup.loginAs();
+        wait.threadsSleepWait();
+        loginPopup.checkInmatePopup();
+        loginPopup.closeInmatePopUp();
+        loginPopup.checkInmate();
         loginPopup.checkOpenMainPage();
         wait.threadsSleepWait();
         loginPopup.driverWaitSignout();

@@ -1,5 +1,6 @@
 package Page;
 
+import Data.ContactUsData.ContactUs;
 import Utils.ConfigProperties;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -15,7 +16,7 @@ public class ContactUsPage extends BasePage {
     @FindBy(xpath = "//a[@href='/contact']")
     private WebElement contactUsLink;
 
-    @FindBy(tagName = "h5")
+    @FindBy(css = ".contact-form-holder-in h5")
     private WebElement contactUsTitle;
 
     @FindBy(xpath = "//input[@id='name']")
@@ -27,7 +28,7 @@ public class ContactUsPage extends BasePage {
     @FindBy(xpath = "//input[@id='phone']")
     private WebElement fieldPhone;
 
-    @FindBy(xpath = "//input[@id='message']")
+    @FindBy(xpath = "//textarea[@id='message']")
     private WebElement fieldMessage;
 
     @FindBy(xpath = "//form//button[@value='send']")
@@ -36,17 +37,14 @@ public class ContactUsPage extends BasePage {
     @FindBy(xpath = "//input[@id='name']/following::p[@class='error-message'][1]")
     private WebElement nameErrorMessage;
 
-    @FindBy(xpath = "//p[contains(text(),'The email field is required.')]")
+    @FindBy(xpath = "//input[@id='email']/following::p[@class='error-message'][1]")
     private WebElement emailErrorMessage;
 
-    @FindBy(xpath = "//p[contains(text(),'The phone field is required.')]")
+    @FindBy(xpath = "//input[@id='phone']/following::p[@class='error-message'][1]")
     private WebElement phoneErrorMessage;
 
-    @FindBy(xpath = "//p[contains(text(),'The message field is required.')]")
+    @FindBy(xpath = "//textarea[@id='message']/following::p[@class='error-message'][1]")
     private WebElement mesErrorMessage;
-
-    @FindBy(xpath = "//p[contains(text(),'The email field must be a valid email.')]")
-    private WebElement incorrectMessageEmail;
 
     @FindBy(xpath = "//button[@type = 'submit' and @value = 'send']")
     private WebElement sendButton;
@@ -57,7 +55,7 @@ public class ContactUsPage extends BasePage {
 
     @Override
     public void open(){
-        driver.get(ConfigProperties.getProperty("login.url"));
+        driver.get(ConfigProperties.getProperty("contactUs.url"));
     }
 
     public ContactUsPage clickContactPage(){
@@ -76,7 +74,8 @@ public class ContactUsPage extends BasePage {
     }
 
     public ContactUsPage checkIncorrectEmailMessage(){
-        checkText(incorrectMessageEmail,"The email field must be a valid email.");
+        softAssert.assertEquals(emailErrorMessage.getText(),"The email field must be a valid email.");
+        softAssert.assertAll();
         return new ContactUsPage(driver);
     }
 
@@ -88,19 +87,20 @@ public class ContactUsPage extends BasePage {
         return PageFactory.initElements(driver, ContactUsPage.class);
     }
 
-    public ContactUsPage fillIncorrectData() {
-        type(fieldFullName, Data.ContactUsData.ContactUs.INVALID.getName());
-        type(fieldFullName, Data.ContactUsData.ContactUs.INVALID.getEmail());
-        type(fieldFullName, Data.ContactUsData.ContactUs.INVALID.getPhone());
-        type(fieldFullName, Data.ContactUsData.ContactUs.INVALID.getMessage());
-        return PageFactory.initElements(driver, ContactUsPage.class);
+    public void fillContactForm(ContactUs contactUs) {
+        type(fieldFullName, contactUs.getName());
+        type(fieldEmail, contactUs.getEmail());
+        type(fieldPhone, contactUs.getPhone());
+        type(fieldMessage, contactUs.getMessage());
     }
 
     public ContactUsPage checkErrorMessages(){
-        checkText(nameErrorMessage, "The name field is required. d");
-        checkText(emailErrorMessage, "The email field is required.");
-        checkText(phoneErrorMessage, "The phone field is required.");
-        checkText(mesErrorMessage, "The message field is required.");
+        softAssert.assertEquals(contactUsTitle.getText(),"SEND US YOUR FEEDBACK");
+        softAssert.assertEquals(nameErrorMessage.getText(),"The name field is required.");
+        softAssert.assertEquals(emailErrorMessage.getText(),"The email field is required.");
+        softAssert.assertEquals(phoneErrorMessage.getText(),"The phone field is required.");
+        softAssert.assertEquals(mesErrorMessage.getText(),"The message field is required.");
+        softAssert.assertAll();
         return new ContactUsPage(driver);
     }
 

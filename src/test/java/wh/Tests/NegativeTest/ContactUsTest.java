@@ -1,6 +1,8 @@
 package wh.Tests.NegativeTest;
 
+import Data.ContactUsData.ContactUs;
 import Page.ContactUsPage;
+import Page.MainPage;
 import Utils.Wait;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -17,11 +19,14 @@ import wh.Tests.TestBase.BaseTest;
 @Feature("Check Contact us form with incorrect data and with empty fields")
 public class ContactUsTest extends BaseTest {
     private ContactUsPage contactUs;
+    private MainPage homePage;
     private Wait wait;
+
 
     @BeforeMethod
     public void initPageObjects() {
         contactUs = new ContactUsPage(app.getDriver());
+        homePage = new MainPage(app.getDriver());
         wait = new Wait(app.getDriver());
     }
 
@@ -29,11 +34,8 @@ public class ContactUsTest extends BaseTest {
     @Description("Test Description: Click Send btm with empty fields in contact us form")
     @Story("Negative test. Test Description: Click Send btn with empty fields in contact us form")
     public void emptyFieldsContactUs()throws Exception{
-        contactUs.open();
-        contactUs.driverWaitPreloader();
-        contactUs.scrollDownToVisibleElement();
-        contactUs.clickContactPage();
-        contactUs.checkTitle();
+        homePage.open();
+        homePage.clickNavItemFooter("Contact Us");
         contactUs.clickSendBtn();
         contactUs.checkErrorMessages();
     }
@@ -43,11 +45,8 @@ public class ContactUsTest extends BaseTest {
     @Story("Negative test. Send incorrect data from contact us form")
     public void incorrectFieldsContactUs()throws Exception{
         contactUs.open();
-        contactUs.driverWaitPreloader();
-        contactUs.scrollDownToVisibleElement();
-        contactUs.clickContactPage();
-        contactUs.checkTitle();
-        contactUs.fillIncorrectData();
+        contactUs.fillContactForm(ContactUs.INVALID);
         contactUs.clickSendBtn();
+        contactUs.checkIncorrectEmailMessage();
     }
 }

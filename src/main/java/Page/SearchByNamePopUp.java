@@ -17,7 +17,7 @@ import static org.testng.Assert.assertTrue;
 
 public class SearchByNamePopUp extends BasePage {
 
-    @FindBy(xpath = "//form//div[2]/a")
+    @FindBy(xpath = "//input[@name='inmate_number']/following::a[contains(text(), 'search')]")
     private WebElement searcByNameLink;
 
     @FindBy(xpath = "//*[@id=\"firstName\"]")
@@ -48,6 +48,7 @@ public class SearchByNamePopUp extends BasePage {
 
     @Step("Click 'Search by name' link")
     public void clickSearchByNameLink() {
+        waitUntilElementWillBeClickable(searcByNameLink);
         searcByNameLink.click();
     }
 

@@ -1,10 +1,10 @@
 package wh.Tests.NegativeTest;
 
 import Page.EnterNewInmateInformPopUp;
+import Page.MainPage;
 import Page.SearchByNamePopUp;
 import Utils.Wait;
 import io.qameta.allure.*;
-import org.openqa.selenium.support.PageFactory;
 import org.testng.TestListenerAdapter;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
@@ -17,12 +17,14 @@ import wh.Tests.TestBase.BaseTest;
 public class EnterNewInmateTest extends BaseTest {
     private EnterNewInmateInformPopUp enterNewInmateInformPopUp;
     private SearchByNamePopUp searchByNamePopUp;
+    private MainPage homePage;
     private Wait wait;
 
     @BeforeMethod
     public void initPageObjects() {
         enterNewInmateInformPopUp = new EnterNewInmateInformPopUp(app.getDriver());
         searchByNamePopUp = new SearchByNamePopUp(app.getDriver());
+        homePage = new MainPage(app.getDriver());
         wait = new Wait(app.getDriver());
     }
 
@@ -31,16 +33,10 @@ public class EnterNewInmateTest extends BaseTest {
     @Description("Test Description: Check error messages for empty fields")
     @Story("Negative test. Empty fields")
     public void EnterNewInmateEmptyFields() throws Exception {
-        enterNewInmateInformPopUp.open();
-        wait.threadsSleepWait();
-        searchByNamePopUp.driverWait();
+        homePage.open();
         searchByNamePopUp.clickSearchByNameLink();
-        enterNewInmateInformPopUp.driverElementWait();
         enterNewInmateInformPopUp.clickEnterNewInmateLink();
         enterNewInmateInformPopUp.clickSaveBtn();
-        enterNewInmateInformPopUp.checkFirstNameValidationMessages();
-        enterNewInmateInformPopUp.checkLastNameValidationMessages();
-        enterNewInmateInformPopUp.checkStateValidationMessages();
-        enterNewInmateInformPopUp.checkFacilityValidationMessages();
+        enterNewInmateInformPopUp.checkErrorMessages();
     }
 }

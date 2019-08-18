@@ -16,7 +16,7 @@ import static org.testng.Assert.assertTrue;
 
 public class EnterNewInmateInformPopUp extends BasePage {
 
-    @FindBy(xpath = " //form/a[contains(text(),'Enter Inmate Information')]")
+    @FindBy(xpath = "//form/a[contains(text(),'Enter Inmate Information')]")
     private WebElement enterNewInmateInformationLink;
 
     @FindBy(xpath = "//*[@id=\"inmate-info-first_name\"]")
@@ -43,22 +43,25 @@ public class EnterNewInmateInformPopUp extends BasePage {
     @FindBy(xpath = "//span[1]/input")
     private WebElement inputField;
 
-    @FindBy(xpath = "//div[8]/form/div[6]/input")
+    @FindBy(xpath = "//button[@value='Save']")
     private WebElement saveBtn;
 
     @FindBy(xpath = "//div[7]/div[7]")
     private WebElement selectPackagePopUp;
 
-    @FindBy(xpath = "//p[contains(text(),'The first_name field is required.')]")
+    @FindBy(xpath = "//input[@id='inmate-info-first_name']/following::p[@class='error-message'][1]")
     private WebElement firstNameErrorMessage;
 
-    @FindBy(xpath = "//p[contains(text(),'The last_name field is required.')]")
+    @FindBy(xpath = "//input[@id='inmate-info-last_name']/following::p[@class='error-message'][1]")
     private WebElement lastNameErrorMessage;
 
-    @FindBy(xpath = "//p[contains(text(),'The state_id field is required.')]")
+    @FindBy(xpath = "//input[@id='inmate-info-inmate_number']/following::p[@class='error-message'][1]")
+    private WebElement inmateIDErrorMessage;
+
+    @FindBy(xpath = "//select[@id='inmate-info-state_id']/following::p[@class='error-message'][1]")
     private WebElement stateErrorMessage;
 
-    @FindBy(xpath = "//p[contains(text(),'The facility_id field is required.')]")
+    @FindBy(xpath = "//select[@id='inmate-info-facility_id']/following::p[@class='error-message'][1]")
     private WebElement facilityErrorMessage;
 
     public EnterNewInmateInformPopUp(WebDriver driver) {
@@ -67,36 +70,25 @@ public class EnterNewInmateInformPopUp extends BasePage {
 
     @Step("Opened 'Enter new Inmate' pop-up")
     public EnterNewInmateInformPopUp clickEnterNewInmateLink() {
+        waitUntilElementWillBeClickable(enterNewInmateInformationLink);
         enterNewInmateInformationLink.click();
         return new EnterNewInmateInformPopUp(driver);
     }
 
-    @Step("Check validation for 'First name' field")
-    public EnterNewInmateInformPopUp checkFirstNameValidationMessages() {
-        assertTrue(isElementPresent(firstNameErrorMessage));
-        return new EnterNewInmateInformPopUp(driver);
-    }
-
-    @Step("Check validation for 'Last name' field")
-    public EnterNewInmateInformPopUp checkLastNameValidationMessages() {
-        assertTrue(isElementPresent(lastNameErrorMessage));
-        return new EnterNewInmateInformPopUp(driver);
-    }
-
-    @Step("Check validation for 'State' field")
-    public EnterNewInmateInformPopUp checkStateValidationMessages() {
-        assertTrue(isElementPresent(stateErrorMessage));
-        return new EnterNewInmateInformPopUp(driver);
-    }
-
-    @Step("Check validation for 'Facility' field")
-    public EnterNewInmateInformPopUp checkFacilityValidationMessages() {
-        assertTrue(isElementPresent(facilityErrorMessage));
+    @Step("Check Error Messages")
+    public EnterNewInmateInformPopUp checkErrorMessages(){
+        softAssert.assertEquals(firstNameErrorMessage.getText(),"The first name field is required.");
+        softAssert.assertEquals(lastNameErrorMessage.getText(),"The last name field is required.");
+        softAssert.assertEquals(inmateIDErrorMessage.getText(),"The inmate ID field is required.");
+        softAssert.assertEquals(stateErrorMessage.getText(),"The state field is required.");
+        softAssert.assertEquals(facilityErrorMessage.getText(),"The facility field is required.");
+        softAssert.assertAll();
         return new EnterNewInmateInformPopUp(driver);
     }
 
     @Step("Save new inmate")
     public EnterNewInmateInformPopUp clickSaveBtn() {
+        waitUntilElementWillBeClickable(saveBtn);
         saveBtn.click();
         return new EnterNewInmateInformPopUp(driver);
     }

@@ -116,7 +116,7 @@ public class LoginPopup extends BasePage {
         type(emailField, SignInUsersData.VALID.getLoginEmail());
         type(passwordField, SignInUsersData.VALID.getLoginPassword());
         btn.click();
-        return PageFactory.initElements(driver, LoginPopup.class);
+        return new LoginPopup(driver);
     }
 
     @Step("Fill 'Password' field")
